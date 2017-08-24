@@ -89,10 +89,10 @@ namespace Compas.Dynamo.Datastructures
             var pySrc =
 @"
 import sys
-sys.path.append(r'C:\Program Files (x86)\IronPython 2.7')
-sys.path.append(r'C:\Program Files (x86)\IronPython 2.7\Lib')
-sys.path.append(r'C:\Program Files (x86)\IronPython 2.7\DLLs')
-sys.path.append(r'C:\Users\JLXMac\AppData\Roaming\Dynamo\Dynamo Core\1.3\packages\DynamoCompas\bin')
+sys.path.append(r'" + IronPythonPath + @"')
+sys.path.append(r'" + IronPythonPath + @"\Lib')
+sys.path.append(r'" + IronPythonPath + @"\DLLs')
+sys.path.append(r'" + path + @"')
 
 import compas
 from compas.datastructures.network import Network
@@ -181,46 +181,7 @@ def NetworkFromObject(filepath):
                     package.AddLineStripVertexCount(2);
                 }
             }
-
-            //// Edges
-            //foreach (List<object> edge in edgeIndices)
-            //{
-            //    List<object> startPoint = vertices[1] as List<object>;
-            //    double startX = (double)startPoint[0];
-            //    double startY = (double)startPoint[1];
-            //    double startZ = (double)startPoint[2];
-
-            //    List<object> endPoint = vertices[1] as List<object>;
-            //    double endX = (double)endPoint[0];
-            //    double endY = (double)endPoint[1];
-            //    double endZ = (double)endPoint[2];
-
-            //    package.AddLineStripVertex(startX, startY, startZ);
-            //    package.AddLineStripVertex(endX, endY, endZ);
-
-            //    package.AddLineStripVertexColor(0, 0, 100, 255);
-            //    package.AddLineStripVertexColor(0, 0, 150, 255);
-
-            //    package.AddLineStripVertexCount(1);
-            //}
-
-            //internal static void DrawColoredLine(IRenderPackage package, CompasNetworkWrapper network, Point p0, Point p1)
-            //{
-            //    package.AddLineStripVertex(p0.X, p0.Y, p0.Z);
-            //    package.AddLineStripVertex(p1.X, p1.Y, p1.Z);
-
-            //    byte blue0 = (byte)Math.Round(255 * ((p0.Z - network.minZ) / network.dz));
-            //    byte blue1 = (byte)Math.Round(255 * ((p1.Z - network.minZ) / network.dz));
-
-            //    package.AddLineStripVertexColor(0, 0, blue0, 255);
-            //    package.AddLineStripVertexColor(0, 0, blue1, 255);
-
-            //    // Specify line segments by adding a line vertex count.
-            //    // Ex. The above line has two vertices, so we add a line
-            //    // vertex count of 2. If we had tessellated a curve with n
-            //    // vertices, we would add a line vertex count of n.
-            //    package.AddLineStripVertexCount(2);
-            //}
+            
         }
 
         #endregion
