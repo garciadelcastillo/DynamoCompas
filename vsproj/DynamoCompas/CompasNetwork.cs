@@ -27,11 +27,11 @@ namespace Compas.Dynamo.Datastructures
         private double[][] verticesDouble;
 
         // [[ptid0, ptid1],[..]]
-        private List<object> edgeIndices;
-        private int[][] edgesInt;
+        internal List<object> edgeIndices;
+        internal int[][] edgesInt;
 
-        private List<object> frames;
-        private double[][][] framesFloats = null;
+        internal List<object> frames;
+        internal double[][][] frameDoubles = null;
 
         #endregion
 
@@ -87,7 +87,7 @@ namespace Compas.Dynamo.Datastructures
             int j = 0;
             if (frames != null)
             {
-                framesFloats = new double[frames.Count][][];
+                frameDoubles = new double[frames.Count][][];
                 i = 0;
                 foreach (List<object> f in frames)
                 {
@@ -101,7 +101,7 @@ namespace Compas.Dynamo.Datastructures
                         t[2] = (double)xyz[2];
                         verts[j++] = t;
                     }
-                    framesFloats[i++] = verts;
+                    frameDoubles[i++] = verts;
                 }
             }
 
@@ -144,6 +144,7 @@ def NetworkFromObject(filepath):
     return List[object]([network, str(network), vertices, edges])
 
 ";
+
 
             if (filePath != null || filePath != "")
             {
@@ -211,6 +212,8 @@ def SmoothNetwork(network, its, animate=False):
 
 ";
 
+            // REMEMBER: add initial zero frame to the frames animations
+
             if (network != null && network is CompasNetwork)
             {
                 // host python and execute script
@@ -261,21 +264,27 @@ def SmoothNetwork(network, its, animate=False):
         public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         {
             // Vertices
-            if (verticesDouble != null)
+            if (vertices != null)
             {
-                foreach (double[] p in verticesDouble)
-                {
-                    package.AddPointVertex(p[0], p[1], p[2]);
-                    package.AddPointVertexColor(255, 0, 0, 255);
-                }
+                RenderNetworkFrame(this, verticesDouble, package, parameters);
+            }
+        }
+
+        internal static void RenderNetworkFrame(CompasNetwork network, double[][] vertices, IRenderPackage package, TessellationParameters parameters)
+        {
+            // Vertices
+            foreach (double[] p in vertices)
+            {
+                package.AddPointVertex(p[0], p[1], p[2]);
+                package.AddPointVertexColor(255, 0, 0, 255);
             }
 
-            if (edgesInt != null)
+            if (network.edgesInt != null)
             {
-                foreach (int[] ids in edgesInt)
+                foreach (int[] ids in network.edgesInt)
                 {
-                    double[] p0 = verticesDouble[ids[0]];
-                    double[] p1 = verticesDouble[ids[1]];
+                    double[] p0 = vertices[ids[0]];
+                    double[] p1 = vertices[ids[1]];
 
                     package.AddLineStripVertexColor(0, 255, 0, 255);
                     package.AddLineStripVertex(p0[0], p0[1], p0[2]);
@@ -286,7 +295,6 @@ def SmoothNetwork(network, its, animate=False):
                     package.AddLineStripVertexCount(2);
                 }
             }
-
         }
 
         #endregion
@@ -303,7 +311,7 @@ def SmoothNetwork(network, its, animate=False):
 
         public object GetFloatFrames()
         {
-            return this.framesFloats;
+            return this.frameDoubles;
         }
 
         public override string ToString()

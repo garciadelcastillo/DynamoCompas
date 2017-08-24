@@ -150,6 +150,7 @@
     <Compile Include="CompasNetwork.cs" />
     <Compile Include="CompasNetworkWrapper.cs" />
     <Compile Include="CompasPythonEngine.cs" />
+    <Compile Include="CompassNetworkAnimationViz.cs" />
     <Compile Include="DynamoCompas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
