@@ -24,6 +24,9 @@ namespace Compas.Dynamo.Datastructures
         private string str;
         // [[x,y,z],[x,y,z],[..]]
         private List<object> vertices;
+
+        private double[][] verticesDouble;
+
         // [[x,y,z],[x,y,z],[..]]
         private List<object> edges;
 
@@ -52,6 +55,19 @@ namespace Compas.Dynamo.Datastructures
             pythonNetwork = _pythonNetwork;
             vertices = _vertices;
             edges = _indices;
+
+            verticesDouble = new double[vertices.Count][];
+
+            // parse the vertices to double arrays
+            int i = 0;
+            foreach (List<object> p in vertices)
+            {
+                double[] triple = new double[3];
+                triple[0] = (double)p[0];
+                triple[1] = (double)p[1];
+                triple[2] = (double)p[2];
+                verticesDouble[i++] = triple;
+            }
         }
 
         public static CompasNetwork CompasNetworkFromObj(string filePath = null, string IronPythonPath = @"C:\Program Files (x86)\IronPython 2.7")
@@ -130,12 +146,17 @@ def NetworkFromObject(filepath):
             // Vertices
             if (vertices != null)
             {
-                foreach (List<object> p in vertices)
+                //foreach (List<object> p in vertices)
+                //{
+                //    double x = (double)p[0];
+                //    double y = (double)p[1];
+                //    double z = (double)p[2];
+                //    package.AddPointVertex(x, y, z);
+                //    package.AddPointVertexColor(255, 0, 0, 255);
+                //}
+                foreach (double[] p in verticesDouble)
                 {
-                    double x = (double)p[0];
-                    double y = (double)p[1];
-                    double z = (double)p[2];
-                    package.AddPointVertex(x, y, z);
+                    package.AddPointVertex(p[0], p[1], p[2]);
                     package.AddPointVertexColor(255, 0, 0, 255);
                 }
             }
