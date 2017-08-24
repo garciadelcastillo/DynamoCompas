@@ -35,6 +35,15 @@ namespace Compas.Dynamo.Datastructures
 
         #endregion
 
+        #region private methods
+
+        public static string GetPackagePath()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Dynamo\Dynamo Core\1.3\packages\DynamoCompas\";
+        }
+
+        #endregion
+
         #region public methods
 
         private CompasNetwork(object _pythonNetwork, string stringRepresentation, List<object> _vertices, List<object> _indices)
@@ -45,17 +54,24 @@ namespace Compas.Dynamo.Datastructures
             edges = _indices;
         }
 
-        public static CompasNetwork CompasNetworkFromObj(string filePath = null)
+        public static CompasNetwork CompasNetworkFromObj(string filePath = null, string IronPythonPath = @"C:\Program Files (x86)\IronPython 2.7")
         {
+            string path = GetPackagePath() + @"bin";
+
             var pySrc =
 @"
 import sys
+sys.path.append(r'C:\Program Files (x86)\IronPython 2.7')
 sys.path.append(r'C:\Program Files (x86)\IronPython 2.7\Lib')
-sys.path.append(r'C:\Users\martinno\repos\compas\src_load')
+sys.path.append(r'C:\Program Files (x86)\IronPython 2.7\DLLs')
+sys.path.append(r'C:\Users\JLXMac\AppData\Roaming\Dynamo\Dynamo Core\1.3\packages\DynamoCompas\bin')
+
 import compas
 from compas.datastructures.network import Network
+
 # import List class to cast the type
 from System.Collections.Generic import *
+
 
 def NetworkFromObject(filepath):
 
@@ -72,7 +88,9 @@ def NetworkFromObject(filepath):
     edges = List[object]([List[object](ij) for ij in edges])
 
     return List[object]([network, str(network), vertices, edges])
+
 ";
+
             if (filePath != null || filePath != "")
             {
 
