@@ -24,11 +24,11 @@ namespace Compas.Dynamo.Datastructures
         private string str;
         // [[x,y,z],[x,y,z],[..]]
         private List<object> vertices;
-
         private double[][] verticesDouble;
 
-        // [[x,y,z],[x,y,z],[..]]
-        private List<object> edges;
+        // [[ptid0, ptid1],[..]]
+        private List<object> edgeIndices;
+        private int[][] edgesInt;
 
         #endregion
 
@@ -49,16 +49,16 @@ namespace Compas.Dynamo.Datastructures
 
         #region public methods
 
-        private CompasNetwork(object _pythonNetwork, string stringRepresentation, List<object> _vertices, List<object> _indices)
+        private CompasNetwork(object _pythonNetwork, string stringRepresentation, List<object> _vertices, List<object> _edgeIndices)
         {
             str = stringRepresentation;
             pythonNetwork = _pythonNetwork;
             vertices = _vertices;
-            edges = _indices;
-
-            verticesDouble = new double[vertices.Count][];
+            edgeIndices = _edgeIndices;
 
             // parse the vertices to double arrays
+            // [[x,y,z],[x,y,z],[..]]
+            verticesDouble = new double[vertices.Count][];
             int i = 0;
             foreach (List<object> p in vertices)
             {
@@ -68,6 +68,18 @@ namespace Compas.Dynamo.Datastructures
                 triple[2] = (double)p[2];
                 verticesDouble[i++] = triple;
             }
+
+            // [[ptid0, ptid1],[..]]
+            edgesInt = new int[edgeIndices.Count][];
+            i = 0;
+            foreach(List<object> e in edgeIndices)
+            {
+                int[] edge = new int[2];
+                edge[0] = (int)e[0];
+                edge[1] = (int)e[1];
+                edgesInt[i++] = edge;
+            }
+
         }
 
         public static CompasNetwork CompasNetworkFromObj(string filePath = null, string IronPythonPath = @"C:\Program Files (x86)\IronPython 2.7")
@@ -144,16 +156,8 @@ def NetworkFromObject(filepath):
         public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         {
             // Vertices
-            if (vertices != null)
+            if (verticesDouble != null)
             {
-                //foreach (List<object> p in vertices)
-                //{
-                //    double x = (double)p[0];
-                //    double y = (double)p[1];
-                //    double z = (double)p[2];
-                //    package.AddPointVertex(x, y, z);
-                //    package.AddPointVertexColor(255, 0, 0, 255);
-                //}
                 foreach (double[] p in verticesDouble)
                 {
                     package.AddPointVertex(p[0], p[1], p[2]);
@@ -161,27 +165,44 @@ def NetworkFromObject(filepath):
                 }
             }
 
-            // Edges
-            foreach (List<object> edge in edges)
+            if (edgesInt != null)
             {
-                List<object> startPoint = vertices[1] as List<object>;
-                double startX = (double)startPoint[0];
-                double startY = (double)startPoint[1];
-                double startZ = (double)startPoint[2];
+                foreach (int[] ids in edgesInt)
+                {
+                    double[] p0 = verticesDouble[ids[0]];
+                    double[] p1 = verticesDouble[ids[1]];
 
-                List<object> endPoint = vertices[1] as List<object>;
-                double endX = (double)endPoint[0];
-                double endY = (double)endPoint[1];
-                double endZ = (double)endPoint[2];
+                    package.AddLineStripVertexColor(0, 255, 0, 255);
+                    package.AddLineStripVertex(p0[0], p0[1], p0[2]);
 
-                package.AddLineStripVertex(startX, startY, startZ);
-                package.AddLineStripVertex(endX, endY, endZ);
+                    package.AddLineStripVertexColor(0, 0, 255, 255);
+                    package.AddLineStripVertex(p1[0], p1[1], p1[2]);
 
-                package.AddLineStripVertexColor(0, 0, 100, 255);
-                package.AddLineStripVertexColor(0, 0, 150, 255);
-
-                package.AddLineStripVertexCount(1);
+                    package.AddLineStripVertexCount(2);
+                }
             }
+
+            //// Edges
+            //foreach (List<object> edge in edgeIndices)
+            //{
+            //    List<object> startPoint = vertices[1] as List<object>;
+            //    double startX = (double)startPoint[0];
+            //    double startY = (double)startPoint[1];
+            //    double startZ = (double)startPoint[2];
+
+            //    List<object> endPoint = vertices[1] as List<object>;
+            //    double endX = (double)endPoint[0];
+            //    double endY = (double)endPoint[1];
+            //    double endZ = (double)endPoint[2];
+
+            //    package.AddLineStripVertex(startX, startY, startZ);
+            //    package.AddLineStripVertex(endX, endY, endZ);
+
+            //    package.AddLineStripVertexColor(0, 0, 100, 255);
+            //    package.AddLineStripVertexColor(0, 0, 150, 255);
+
+            //    package.AddLineStripVertexCount(1);
+            //}
 
             //internal static void DrawColoredLine(IRenderPackage package, CompasNetworkWrapper network, Point p0, Point p1)
             //{
