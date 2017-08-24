@@ -122,22 +122,44 @@ def NetworkFromObject(filepath):
                 }
             }
 
-            // Faces (for CompasMesh)
-            //foreach (List<object> ig in indices)
+            // Edges
+            foreach (List<object> edge in edges)
+            {
+                List<object> startPoint = vertices[1] as List<object>;
+                double startX = (double)startPoint[0];
+                double startY = (double)startPoint[1];
+                double startZ = (double)startPoint[2];
+
+                List<object> endPoint = vertices[1] as List<object>;
+                double endX = (double)endPoint[0];
+                double endY = (double)endPoint[1];
+                double endZ = (double)endPoint[2];
+
+                package.AddLineStripVertex(startX, startY, startZ);
+                package.AddLineStripVertex(endX, endY, endZ);
+
+                package.AddLineStripVertexColor(0, 0, 100, 255);
+                package.AddLineStripVertexColor(0, 0, 150, 255);
+
+                package.AddLineStripVertexCount(1);
+            }
+
+            //internal static void DrawColoredLine(IRenderPackage package, CompasNetworkWrapper network, Point p0, Point p1)
             //{
-            //    if (ig.Count == 3)
-            //    {
-            //        DrawColoredLine(package, pts[ig.A], pts[ig.B], zHeights[ig.A], zHeights[ig.B]);
-            //        DrawColoredLine(package, pts[ig.B], pts[ig.C], zHeights[ig.B], zHeights[ig.C]);
-            //        DrawColoredLine(package, pts[ig.C], pts[ig.A], zHeights[ig.C], zHeights[ig.A]);
-            //    }
-            //    else if (ig.Count == 4)
-            //    {
-            //        DrawColoredLine(package, pts[ig.A], pts[ig.B], zHeights[ig.A], zHeights[ig.B]);
-            //        DrawColoredLine(package, pts[ig.B], pts[ig.C], zHeights[ig.B], zHeights[ig.C]);
-            //        DrawColoredLine(package, pts[ig.C], pts[ig.D], zHeights[ig.C], zHeights[ig.D]);
-            //        DrawColoredLine(package, pts[ig.D], pts[ig.A], zHeights[ig.D], zHeights[ig.A]);
-            //    }
+            //    package.AddLineStripVertex(p0.X, p0.Y, p0.Z);
+            //    package.AddLineStripVertex(p1.X, p1.Y, p1.Z);
+
+            //    byte blue0 = (byte)Math.Round(255 * ((p0.Z - network.minZ) / network.dz));
+            //    byte blue1 = (byte)Math.Round(255 * ((p1.Z - network.minZ) / network.dz));
+
+            //    package.AddLineStripVertexColor(0, 0, blue0, 255);
+            //    package.AddLineStripVertexColor(0, 0, blue1, 255);
+
+            //    // Specify line segments by adding a line vertex count.
+            //    // Ex. The above line has two vertices, so we add a line
+            //    // vertex count of 2. If we had tessellated a curve with n
+            //    // vertices, we would add a line vertex count of n.
+            //    package.AddLineStripVertexCount(2);
             //}
         }
 
