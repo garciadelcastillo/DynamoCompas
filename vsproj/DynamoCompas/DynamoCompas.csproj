@@ -10,8 +10,8 @@
     <ProjectGuid>{9AAA31F4-022E-4D13-A92E-85B9B68CCE01}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZeroTouchEssentials</RootNamespace>
-    <AssemblyName>ZeroTouchEssentials</AssemblyName>
+    <RootNamespace>DynamoCompas</RootNamespace>
+    <AssemblyName>DynamoCompas</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\DynamoCompas.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompasNetworkWrapper.cs" />
     <Compile Include="DynamoCompas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
