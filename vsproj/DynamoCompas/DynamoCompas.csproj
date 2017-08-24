@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompasNetwork.cs" />
     <Compile Include="CompasNetworkWrapper.cs" />
     <Compile Include="DynamoCompas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
