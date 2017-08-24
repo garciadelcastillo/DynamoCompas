@@ -33,7 +33,21 @@ namespace DynamoCompas
             dz = maxZ - minZ;
         }
 
+        /// <summary>
+        /// Shallow copy (really working?)
+        /// </summary>
+        /// <returns></returns>
+        public CompasNetworkWrapper Clone()
+        {
+            Mesh copy = Mesh.ByPointsFaceIndices(mesh.VertexPositions, mesh.FaceIndices);
+            return new CompasNetworkWrapper(copy);
+        }
 
+        /// <summary>
+        /// This is the method that takes care of custom rendering...
+        /// </summary>
+        /// <param name="package"></param>
+        /// <param name="parameters"></param>
         public void Tessellate(IRenderPackage package, TessellationParameters parameters)
         {
             Point[] pts = mesh.VertexPositions;
