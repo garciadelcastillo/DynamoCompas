@@ -30,6 +30,9 @@ namespace Compas.Dynamo.Datastructures
         private List<object> edgeIndices;
         private int[][] edgesInt;
 
+        private List<object> frames;
+        private double[][][] framesFloats = null;
+
         #endregion
 
         #region properties
@@ -49,12 +52,13 @@ namespace Compas.Dynamo.Datastructures
 
         #region public methods
 
-        private CompasNetwork(object _pythonNetwork, string stringRepresentation, List<object> _vertices, List<object> _edgeIndices)
+        private CompasNetwork(object _pythonNetwork, string stringRepresentation, List<object> _vertices, List<object> _edgeIndices, List<object> _frames)
         {
             str = stringRepresentation;
             pythonNetwork = _pythonNetwork;
             vertices = _vertices;
             edgeIndices = _edgeIndices;
+            frames = _frames;
 
             // parse the vertices to double arrays
             // [[x,y,z],[x,y,z],[..]]
@@ -72,13 +76,35 @@ namespace Compas.Dynamo.Datastructures
             // [[ptid0, ptid1],[..]]
             edgesInt = new int[edgeIndices.Count][];
             i = 0;
-            foreach(List<object> e in edgeIndices)
+            foreach (List<object> e in edgeIndices)
             {
                 int[] edge = new int[2];
                 edge[0] = (int)e[0];
                 edge[1] = (int)e[1];
                 edgesInt[i++] = edge;
             }
+
+            int j = 0;
+            if (frames != null)
+            {
+                framesFloats = new double[frames.Count][][];
+                i = 0;
+                foreach (List<object> f in frames)
+                {
+                    double[][] verts = new double[vertices.Count][];
+                    j = 0;
+                    foreach (List<object> xyz in f)
+                    {
+                        double[] t = new double[3];
+                        t[0] = (double)xyz[0];
+                        t[1] = (double)xyz[1];
+                        t[2] = (double)xyz[2];
+                        verts[j++] = t;
+                    }
+                    framesFloats[i++] = verts;
+                }
+            }
+
 
         }
 
@@ -135,8 +161,11 @@ def NetworkFromObject(filepath):
             return null;
         }
 
-        public static CompasNetwork Smooth(CompasNetwork network, int iterations = 100, string IronPythonPath = @"C:\Program Files (x86)\IronPython 2.7")
+        public static CompasNetwork Smooth(CompasNetwork network, int iterations = 100, bool shouldAnimate = false, string IronPythonPath = @"C:\Program Files (x86)\IronPython 2.7")
         {
+
+
+
             string path = GetPackagePath() + @"bin";
 
             var pySrc =
@@ -154,10 +183,17 @@ from compas.datastructures.network.algorithms import smooth_network_centroid
 # import List class to cast the type
 from System.Collections.Generic import *
 
-def SmoothNetwork(network, its):
+def SmoothNetwork(network, its, animate=False):
+
+    def callback(network, k, args):
+        frames = args[0]
+        animate = args[1]
+        if animate:
+            frames.append([network.vertex_coordinates(key) for key in network.vertices()])
     
+    frames = []
     smooth = network.copy()
-    smooth_network_centroid(smooth, fixed = smooth.leaves(), kmax = its)
+    smooth_network_centroid(smooth, fixed = smooth.leaves(), kmax = its, callback=callback, callback_args=(frames, animate))
 
     # extract network vertices
     xyz = [smooth.vertex_coordinates(key) for key in smooth.vertices()]
@@ -168,7 +204,10 @@ def SmoothNetwork(network, its):
     edges = [(key_index[u], key_index[v]) for u, v in smooth.edges()]
     edges = List[object]([List[object](ij) for ij in edges])
 
-    return List[object]([smooth, str(smooth), vertices, edges])
+    # extract animation frames
+    frames = List[object]([List[object]([List[object](xyz) for xyz in frame]) for frame in frames])
+
+    return List[object]([smooth, str(smooth), vertices, edges, frames])
 
 ";
 
@@ -179,20 +218,33 @@ def SmoothNetwork(network, its):
                 var scope = engine.CreateScope();
                 engine.Execute(pySrc, scope);
 
-                var SmoothNetwork = scope.GetVariable<Func<object, int, List<object>>>("SmoothNetwork");
-                var networkList = SmoothNetwork(network.ToPythonNetwork(), iterations);
+                var SmoothNetwork = scope.GetVariable<Func<object, int, bool, List<object>>>("SmoothNetwork");
+                var networkList = SmoothNetwork(network.ToPythonNetwork(), iterations, shouldAnimate);
 
-                return CompasNetwork.Create(networkList[0], networkList[1] as String, networkList[2] as List<object>, networkList[3] as List<object>);
+                return CompasNetwork.Create(
+                    networkList[0], 
+                    networkList[1] as String, 
+                    networkList[2] as List<object>, 
+                    networkList[3] as List<object>, 
+                    networkList[4] as List<object>);
             }
+
             return null;
-            
+
+        }
+
+        //[CanUpdatePeriodically(true)]
+        [IsVisibleInDynamoLibrary(false)]
+        public static CompasNetwork Create(object pythonMesh, string stringRepresentation, List<object> vertices, List<object> indices, List<object> frames)
+        {
+            return new CompasNetwork(pythonMesh, stringRepresentation, vertices, indices, frames);
         }
 
         //[CanUpdatePeriodically(true)]
         [IsVisibleInDynamoLibrary(false)]
         public static CompasNetwork Create(object pythonMesh, string stringRepresentation, List<object> vertices, List<object> indices)
         {
-            return new CompasNetwork(pythonMesh, stringRepresentation, vertices, indices);
+            return new CompasNetwork(pythonMesh, stringRepresentation, vertices, indices, null);
         }
 
         #endregion
@@ -234,7 +286,7 @@ def SmoothNetwork(network, its):
                     package.AddLineStripVertexCount(2);
                 }
             }
-            
+
         }
 
         #endregion
@@ -244,10 +296,36 @@ def SmoothNetwork(network, its):
             return this.pythonNetwork;
         }
 
+        public object GetFrames()
+        {
+            return this.frames;
+        }
+
+        public object GetFloatFrames()
+        {
+            return this.framesFloats;
+        }
+
         public override string ToString()
         {
             //return string.Format("{0}", this.str);
             return this.str;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="network"></param>
+        /// <returns></returns>
+        [MultiReturn(new[] { "PythonMesh", "Vertices", "Edges" })]
+        public static Dictionary<string, object> CompasNetworkProperties(CompasNetwork network)
+        {
+            return new Dictionary<string, object>()
+            {
+                { "PythonMesh", network.ToPythonNetwork() },
+                { "Vertices", 400 },
+                { "Edges", 12 }
+            };
         }
     }
 }

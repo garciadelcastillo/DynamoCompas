@@ -11,6 +11,13 @@
             updated.
             </summary>
         </member>
+        <member name="M:Compas.Dynamo.Datastructures.CompasNetwork.CompasNetworkProperties(Compas.Dynamo.Datastructures.CompasNetwork)">
+            <summary>
+            
+            </summary>
+            <param name="network"></param>
+            <returns></returns>
+        </member>
         <member name="M:DynamoCompas.CompasNetworkWrapper.Clone">
             <summary>
             Shallow copy (really working?)
