@@ -16,7 +16,7 @@ namespace Compas.Dynamo.Datastructures
     [IsDesignScriptCompatible]
     public class CompasNetwork : IGraphicItem
     {
-        #region private members
+        #region private members   
 
         // IronPython mesh object 
         private object pythonNetwork;

@@ -1,9 +1,9 @@
 {
     "license": "",
     "file_hash": null,
-    "name": "CompasDev",
-    "version": "0.0.1",
-    "description": "dev version of the compas Dynamo package",
+    "name": "DynamoCompas",
+    "version": "0.1.0",
+    "description": "Draft version of the compas Dynamo package",
     "group": "",
     "keywords": null,
     "dependencies": [],
@@ -15,5 +15,6 @@
     "repository_url": "",
     "contains_binaries": true,
     "node_libraries": [
+        "DynamoCompas, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
     ]
 }
