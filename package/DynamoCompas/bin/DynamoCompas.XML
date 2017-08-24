@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DynamoCompas</name>
+    </assembly>
+    <members>
+        <member name="M:Compas.Dynamo.Datastructures.CompasNetwork.Tessellate(Autodesk.DesignScript.Interfaces.IRenderPackage,Autodesk.DesignScript.Interfaces.TessellationParameters)">
+            <summary>
+            The Tessellate method in the IGraphicItem interface allows
+            you to specify what is drawn when dynamo's visualization is
+            updated.
+            </summary>
+        </member>
+        <member name="M:DynamoCompas.CompasNetworkWrapper.Clone">
+            <summary>
+            Shallow copy (really working?)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DynamoCompas.CompasNetworkWrapper.Tessellate(Autodesk.DesignScript.Interfaces.IRenderPackage,Autodesk.DesignScript.Interfaces.TessellationParameters)">
+            <summary>
+            This is the method that takes care of custom rendering...
+            </summary>
+            <param name="package"></param>
+            <param name="parameters"></param>
+        </member>
+    </members>
+</doc>

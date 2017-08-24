@@ -1,0 +1,6 @@
+""""""
+
+
+class VolMeshError(Exception):
+    """"""
+    pass

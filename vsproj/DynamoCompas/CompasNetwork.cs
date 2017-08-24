@@ -135,6 +135,59 @@ def NetworkFromObject(filepath):
             return null;
         }
 
+        public static CompasNetwork Smooth(CompasNetwork network, int iterations = 100, string IronPythonPath = @"C:\Program Files (x86)\IronPython 2.7")
+        {
+            string path = GetPackagePath() + @"bin";
+
+            var pySrc =
+@"
+import sys
+sys.path.append(r'" + IronPythonPath + @"')
+sys.path.append(r'" + IronPythonPath + @"\Lib')
+sys.path.append(r'" + IronPythonPath + @"\DLLs')
+sys.path.append(r'" + path + @"')
+
+import compas
+from compas.datastructures.network import Network
+from compas.datastructures.network.algorithms import smooth_network_centroid
+
+# import List class to cast the type
+from System.Collections.Generic import *
+
+def SmoothNetwork(network, its):
+    
+    smooth = network.copy()
+    smooth_network_centroid(smooth, fixed = smooth.leaves(), kmax = its)
+
+    # extract network vertices
+    xyz = [smooth.vertex_coordinates(key) for key in smooth.vertices()]
+    vertices = List[object]([List[object]([x, y, z]) for x, y, z in xyz])
+
+    # extract network edges
+    key_index = smooth.key_index()
+    edges = [(key_index[u], key_index[v]) for u, v in smooth.edges()]
+    edges = List[object]([List[object](ij) for ij in edges])
+
+    return List[object]([smooth, str(smooth), vertices, edges])
+
+";
+
+            if (network != null && network is CompasNetwork)
+            {
+                // host python and execute script
+                var engine = IronPython.Hosting.Python.CreateEngine();
+                var scope = engine.CreateScope();
+                engine.Execute(pySrc, scope);
+
+                var SmoothNetwork = scope.GetVariable<Func<object, int, List<object>>>("SmoothNetwork");
+                var networkList = SmoothNetwork(network.ToPythonNetwork(), iterations);
+
+                return CompasNetwork.Create(networkList[0], networkList[1] as String, networkList[2] as List<object>, networkList[3] as List<object>);
+            }
+            return null;
+            
+        }
+
         //[CanUpdatePeriodically(true)]
         [IsVisibleInDynamoLibrary(false)]
         public static CompasNetwork Create(object pythonMesh, string stringRepresentation, List<object> vertices, List<object> indices)

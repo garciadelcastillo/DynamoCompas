@@ -149,6 +149,7 @@
   <ItemGroup>
     <Compile Include="CompasNetwork.cs" />
     <Compile Include="CompasNetworkWrapper.cs" />
+    <Compile Include="CompasPythonEngine.cs" />
     <Compile Include="DynamoCompas.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -157,7 +158,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-
   <Target Name="AfterBuild">
     <ItemGroup>
       <SourceDlls Include="$(TargetDir)*.dll" />
