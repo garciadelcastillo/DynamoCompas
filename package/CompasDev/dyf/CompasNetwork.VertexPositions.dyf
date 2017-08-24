@@ -1,0 +1,51 @@
+<Workspace Version="1.3.0.875" X="0" Y="0" zoom="1" ScaleFactor="1" Name="CompasNetwork.VertexPositions" Description="Return the vertices of a network as a list of Dynamo points." ID="8d0cf71b-6c77-4ab3-8454-ff2946a66b02" Category="Compas.Datastructures.Network">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="37fe0c59-b240-4ac9-9a7d-a30cda5f1b35" type="PythonNodeModels.PythonNode" nickname="CompasNetwork.VertexPositions" x="250" y="-1" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>import sys
+
+with open('C:/Temp/compas_path.txt', 'r') as f:
+    compas_path = f.readline().strip()
+    iron_path = f.readline().strip()
+
+sys.path.insert(0, iron_path)
+sys.path.insert(0, iron_path + 'DLLs')
+sys.path.insert(0, iron_path + 'Lib')
+sys.path.insert(0, compas_path)
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+import compas
+from compas.datastructures.network import Network
+
+network = IN[0]
+
+key_index = network.key_index()
+
+vertices = [network.vertex_coordinates(key) for key in network.vertices()]
+points = [Point.ByCoordinates(x, y, z) for x, y, z in vertices]
+
+OUT = points</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="443a3a2b-b1c5-43dd-b0b4-9a45e09441b8" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CompasNetwork" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="7bc30925-3c10-4ebe-a445-355a3c3d74ee" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="542" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="Point[]" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="37fe0c59-b240-4ac9-9a7d-a30cda5f1b35" start_index="0" end="7bc30925-3c10-4ebe-a445-355a3c3d74ee" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="443a3a2b-b1c5-43dd-b0b4-9a45e09441b8" start_index="0" end="37fe0c59-b240-4ac9-9a7d-a30cda5f1b35" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

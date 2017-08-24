@@ -1,0 +1,64 @@
+<Workspace Version="1.3.0.875" X="0" Y="0" zoom="1" ScaleFactor="1" Name="CompasMesh.subdivide_mesh_catmullclark" Description="Subdivide a compas mesh according to the catmull-clark scheme." ID="c660f7cd-657e-4e52-a889-d64b13d8f609" Category="Compas.Datastructures.Mesh">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="fc03123f-90b7-4f22-b8a5-15cf30b767ce" type="PythonNodeModels.PythonNode" nickname="CompasMesh.subdivide_mesh_catmullclark" x="251" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script>import sys
+
+with open('C:/Temp/compas_path.txt', 'r') as f:
+    compas_path = f.readline().strip()
+    iron_path = f.readline().strip()
+
+sys.path.insert(0, iron_path)
+sys.path.insert(0, iron_path + 'DLLs')
+sys.path.insert(0, iron_path + 'Lib')
+sys.path.insert(0, compas_path)
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+import compas
+from compas.datastructures.mesh import Mesh
+from compas.datastructures.mesh.algorithms import subdivide_mesh_catmullclark
+
+mesh = IN[0]
+k = IN[1]
+fixed = IN[2]
+
+if not fixed:
+    fixed = []
+
+subd = subdivide_mesh_catmullclark(mesh, k=k, fixed=fixed)
+
+OUT = subd</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="df92d8ed-65aa-4060-b090-6054eafa89ff" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CompasMesh" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="ab72d5f6-61ec-485b-ab46-763ea05fd4ac" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="54" y="62" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="k" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="b0e79bbe-a459-4c05-8928-8886c3069b75" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="607" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="CompasMesh" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="4ca7af12-b9e6-4bae-9ecd-b08c907fdaef" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="42" y="123" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="fixed" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="fc03123f-90b7-4f22-b8a5-15cf30b767ce" start_index="0" end="b0e79bbe-a459-4c05-8928-8886c3069b75" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="df92d8ed-65aa-4060-b090-6054eafa89ff" start_index="0" end="fc03123f-90b7-4f22-b8a5-15cf30b767ce" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ab72d5f6-61ec-485b-ab46-763ea05fd4ac" start_index="0" end="fc03123f-90b7-4f22-b8a5-15cf30b767ce" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="4ca7af12-b9e6-4bae-9ecd-b08c907fdaef" start_index="0" end="fc03123f-90b7-4f22-b8a5-15cf30b767ce" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

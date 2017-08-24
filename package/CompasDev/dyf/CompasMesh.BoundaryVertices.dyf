@@ -1,0 +1,47 @@
+<Workspace Version="1.3.0.875" X="0" Y="0" zoom="1" ScaleFactor="1" Name="CompasMesh.BoundaryVertices" Description="Return the list of boundary vertices of a compas mesh." ID="3683c011-5f49-4b3d-a179-a48f00730d49" Category="Compas.Datastructures.Mesh">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="843a164e-3e40-45f1-8709-fcdd73f18110" type="PythonNodeModels.PythonNode" nickname="CompasMesh.BoundaryVertices" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="1">
+      <PortInfo index="0" default="False" />
+      <Script>import sys
+
+with open('C:/Temp/compas_path.txt', 'r') as f:
+    compas_path = f.readline().strip()
+    iron_path = f.readline().strip()
+
+sys.path.insert(0, iron_path)
+sys.path.insert(0, iron_path + 'DLLs')
+sys.path.insert(0, iron_path + 'Lib')
+sys.path.insert(0, compas_path)
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+
+import compas
+
+mesh = IN[0]
+
+keys = mesh.vertices_on_boundary()
+
+OUT = keys</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="2ba60d17-a2d4-4c9f-9dba-4dddd9e9c088" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CompasMesh" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="7e94642c-d1d7-4c99-b482-f287593dca1d" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="535" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="List" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="843a164e-3e40-45f1-8709-fcdd73f18110" start_index="0" end="7e94642c-d1d7-4c99-b482-f287593dca1d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2ba60d17-a2d4-4c9f-9dba-4dddd9e9c088" start_index="0" end="843a164e-3e40-45f1-8709-fcdd73f18110" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-17" eyeY="24" eyeZ="50" lookX="12" lookY="-13" lookZ="-58" upX="0" upY="1" upZ="0" />
+  </Cameras>
+</Workspace>

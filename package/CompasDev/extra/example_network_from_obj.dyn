@@ -1,0 +1,56 @@
+<Workspace Version="1.3.0.875" X="7.16523867809052" Y="178.223378212974" zoom="1.03794369645043" ScaleFactor="1" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <CoreNodeModels.Input.Filename guid="bb16b8ba-ced8-461b-bf50-e8f38f2e7bd7" type="CoreNodeModels.Input.Filename" nickname="File Path" x="22" y="18" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.String>Z:\compas\core\data\grid_irregular.obj</System.String>
+      <HintPath>Z:\compas\core\data\grid_irregular.obj</HintPath>
+    </CoreNodeModels.Input.Filename>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="c4a736e5-59d4-4b87-be13-085260a57ed0" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasNetwork.from_obj" x="253.498820754717" y="-127.260613207547" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="206c2b64-4112-411c-8a1a-d660aad0e59d" />
+      <Name value="CompasNetwork.from_obj" />
+      <Description value="Make a compas network from an OBJ file." />
+      <Inputs>
+        <Input value="FilePath" />
+      </Inputs>
+      <Outputs>
+        <Output value="CompasNetwork" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="1e7048f1-35e5-45d7-8c02-0477789d168c" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasNetwork.Edges" x="594" y="20" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="a9ac08ef-de26-46ce-9319-0e14e3f15f96" />
+      <Name value="CompasNetwork.Edges" />
+      <Description value="Return the edges of a compas network as a list of Dynamo lines." />
+      <Inputs>
+        <Input value="CompasNetwork" />
+      </Inputs>
+      <Outputs>
+        <Output value="Line" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="12aabe55-173b-45f3-a0a7-6339c163943d" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasNetwork.VertexPositions" x="587.541273584906" y="-122.572523584906" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="8d0cf71b-6c77-4ab3-8454-ff2946a66b02" />
+      <Name value="CompasNetwork.VertexPositions" />
+      <Description value="Return the vertices of a network as a list of Dynamo points." />
+      <Inputs>
+        <Input value="CompasNetwork" />
+      </Inputs>
+      <Outputs>
+        <Output value="Point" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="bb16b8ba-ced8-461b-bf50-e8f38f2e7bd7" start_index="0" end="c4a736e5-59d4-4b87-be13-085260a57ed0" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c4a736e5-59d4-4b87-be13-085260a57ed0" start_index="0" end="1e7048f1-35e5-45d7-8c02-0477789d168c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="c4a736e5-59d4-4b87-be13-085260a57ed0" start_index="0" end="12aabe55-173b-45f3-a0a7-6339c163943d" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="6.51825750115049" eyeY="11.7007374918177" eyeZ="4.95507056493892" lookX="-1.31642234566343" lookY="-11.7007374918177" lookZ="-9.596874306394" upX="-0.0836680228314852" upY="0.788010753606723" upZ="-0.609949763632741" />
+  </Cameras>
+</Workspace>

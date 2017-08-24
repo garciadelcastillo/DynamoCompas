@@ -1,0 +1,57 @@
+<Workspace Version="1.3.0.875" X="0" Y="0" zoom="1" ScaleFactor="1" Name="CompasNetwork.update_default_vertex_attributes" Description="updates the default vertext attributes from a list of keys and a list of values" ID="5fd56605-f923-4a76-990b-34aa26ac5ae3" Category="Compas.Datastructures.Network">
+  <NamespaceResolutionMap />
+  <Elements>
+    <PythonNodeModels.PythonNode guid="24615495-34d6-41ac-ab81-5bd27e6c0dd2" type="PythonNodeModels.PythonNode" nickname="CompasNetwork.update_default_vertex_attributes" x="250" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false" inputcount="3">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <PortInfo index="2" default="False" />
+      <Script>import sys
+with open('C:/Temp/compas_path.txt', 'r') as f:
+    compas_path = f.readline().strip()
+    iron_path = f.readline().strip()
+
+sys.path.insert(0, iron_path)
+sys.path.insert(0, iron_path+'DLLs')
+sys.path.insert(0, iron_path+'Lib')
+sys.path.insert(0, compas_path)
+
+import clr
+clr.AddReference('ProtoGeometry')
+from Autodesk.DesignScript.Geometry import *
+import compas
+from compas.datastructures.network import Network
+
+network = IN[0]
+keys = IN[1]
+values = IN[2]
+att_dict = dict(zip(keys, values))
+network.update_default_vertex_attributes(att_dict)
+OUT = network</Script>
+    </PythonNodeModels.PythonNode>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="3cbc87d7-7272-49a9-8998-77272d9a07a1" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="CompasNetwork" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="6f060ed8-8360-499c-9520-9d3dfc4f0a8b" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="150" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Names" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Symbol guid="70825f2a-7d49-48c8-95a4-60ff8cf4f1d5" type="Dynamo.Graph.Nodes.CustomNodes.Symbol" nickname="Input" x="0" y="300" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <Symbol value="Values" />
+    </Dynamo.Graph.Nodes.CustomNodes.Symbol>
+    <Dynamo.Graph.Nodes.CustomNodes.Output guid="eaca9632-dadc-4cd6-9998-ab787b555bcd" type="Dynamo.Graph.Nodes.CustomNodes.Output" nickname="Output" x="652" y="0" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <Symbol value="CompasNetwork" />
+    </Dynamo.Graph.Nodes.CustomNodes.Output>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="24615495-34d6-41ac-ab81-5bd27e6c0dd2" start_index="0" end="eaca9632-dadc-4cd6-9998-ab787b555bcd" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3cbc87d7-7272-49a9-8998-77272d9a07a1" start_index="0" end="24615495-34d6-41ac-ab81-5bd27e6c0dd2" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="6f060ed8-8360-499c-9520-9d3dfc4f0a8b" start_index="0" end="24615495-34d6-41ac-ab81-5bd27e6c0dd2" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="70825f2a-7d49-48c8-95a4-60ff8cf4f1d5" start_index="0" end="24615495-34d6-41ac-ab81-5bd27e6c0dd2" end_index="2" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="12.58494542232" eyeY="23.3302131121858" eyeZ="17.5484647630355" lookX="-8.12600039769754" lookY="-12.7838925681052" lookZ="-19.3209552770288" upX="-0.12621841898776" upY="0.94551857559932" upZ="-0.300105871160278" />
+  </Cameras>
+</Workspace>

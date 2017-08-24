@@ -1,0 +1,83 @@
+<Workspace Version="1.3.0.875" X="0" Y="0" zoom="1" ScaleFactor="1" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap />
+  <Elements>
+    <CoreNodeModels.Input.IntegerSlider guid="0e05ce77-a0f5-432b-ab06-3062c16a1258" type="CoreNodeModels.Input.IntegerSlider" nickname="Integer Slider" x="31" y="13" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.Int32>6</System.Int32>
+      <Range min="4" max="8" step="2" />
+    </CoreNodeModels.Input.IntegerSlider>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="4efd97f1-3f0f-44f7-95c0-3ab209393149" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Mesh.ByCompasMesh" x="632" y="82.5" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="b17ac3cb-cbcc-4282-b34a-eda1d9151d7e" />
+      <Name value="Mesh.ByCompasMesh" />
+      <Description value="Make a dynamo mesh from a compas mesh" />
+      <Inputs>
+        <Input value="CompasMesh" />
+      </Inputs>
+      <Outputs>
+        <Output value="Mesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <CoreNodeModels.Input.DoubleSlider guid="3b40a7d8-44f1-418d-8bf3-1c26702fbdb1" type="CoreNodeModels.Input.DoubleSlider" nickname="Number Slider" x="31" y="70" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.Double>5</System.Double>
+      <Range min="1" max="10" step="1" />
+    </CoreNodeModels.Input.DoubleSlider>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="8d7f398f-598f-439e-ba8d-d9a24246dd6d" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.from_polyhedron" x="62" y="211" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <ID value="0f981d80-cb96-4e5d-9a19-989e05afbb56" />
+      <Name value="CompasMesh.from_polyhedron" />
+      <Description value="Create a compas mesh from a platonic solid." />
+      <Inputs>
+        <Input value="number of faces" />
+        <Input value="scale" />
+      </Inputs>
+      <Outputs>
+        <Output value="CompasMesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="b3010fcb-8ca0-4d75-bb37-4605e335100c" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.Edges" x="621" y="208.5" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="be5bbd83-5129-4dc0-b9a3-b061bc253f23" />
+      <Name value="CompasMesh.Edges" />
+      <Description value="Return the edges of the compas mesh as Dynamo lines." />
+      <Inputs>
+        <Input value="CompasMesh" />
+      </Inputs>
+      <Outputs>
+        <Output value="Line" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <CoreNodeModels.Input.IntegerSlider guid="27b97bc3-2eba-4b77-a09a-473f4b774cb5" type="CoreNodeModels.Input.IntegerSlider" nickname="Integer Slider" x="199" y="377" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.Int32>3</System.Int32>
+      <Range min="1" max="6" step="1" />
+    </CoreNodeModels.Input.IntegerSlider>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="104bfc64-fd46-4e16-9874-d319e522e827" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.subdivide_mesh_catmullclark" x="575" y="320" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <PortInfo index="1" default="False" />
+      <ID value="c660f7cd-657e-4e52-a889-d64b13d8f609" />
+      <Name value="CompasMesh.subdivide_mesh_catmullclark" />
+      <Description value="Subdivide a compas mesh according to the catmull-clark scheme." />
+      <Inputs>
+        <Input value="CompasMesh" />
+        <Input value="k" />
+      </Inputs>
+      <Outputs>
+        <Output value="CompasMesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="0e05ce77-a0f5-432b-ab06-3062c16a1258" start_index="0" end="8d7f398f-598f-439e-ba8d-d9a24246dd6d" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="3b40a7d8-44f1-418d-8bf3-1c26702fbdb1" start_index="0" end="8d7f398f-598f-439e-ba8d-d9a24246dd6d" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="8d7f398f-598f-439e-ba8d-d9a24246dd6d" start_index="0" end="104bfc64-fd46-4e16-9874-d319e522e827" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="27b97bc3-2eba-4b77-a09a-473f4b774cb5" start_index="0" end="104bfc64-fd46-4e16-9874-d319e522e827" end_index="1" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="104bfc64-fd46-4e16-9874-d319e522e827" start_index="0" end="4efd97f1-3f0f-44f7-95c0-3ab209393149" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="104bfc64-fd46-4e16-9874-d319e522e827" start_index="0" end="b3010fcb-8ca0-4d75-bb37-4605e335100c" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-3.84413260853287" eyeY="16.5132304212615" eyeZ="14.1591413413211" lookX="3.84413260853287" lookY="-16.5132304212615" lookZ="-14.1591413413211" upX="0.154005684798421" upY="0.809017018611319" upZ="-0.567251056123068" />
+  </Cameras>
+</Workspace>

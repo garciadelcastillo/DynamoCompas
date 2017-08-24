@@ -1,0 +1,84 @@
+<Workspace Version="1.3.0.875" X="0" Y="0" zoom="1" ScaleFactor="1" Name="Home" Description="" RunType="Automatic" RunPeriod="1000" HasRunWithoutCrash="True">
+  <NamespaceResolutionMap>
+    <ClassMap partialName="Line.By" resolvedName="Autodesk.DesignScript.Geometry.Line" assemblyName="ProtoGeometry.dll" />
+  </NamespaceResolutionMap>
+  <Elements>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="31a2f0e4-d09a-4c43-a088-6c21ef336bce" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.from_obj" x="35" y="137.5" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="49d28b20-ccd5-4f9e-bc1c-64fab60644cc" />
+      <Name value="CompasMesh.from_obj" />
+      <Description value="Construct a compas mesh from an OBJ file." />
+      <Inputs>
+        <Input value="FilePath" />
+      </Inputs>
+      <Outputs>
+        <Output value="CompasMesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="ae47e6f3-5b2b-4d2a-b520-29657fe5da9b" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.smooth_mesh_centroid" x="30" y="226.5" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="33836e8e-7582-418f-9f87-37b1cd576507" />
+      <Name value="CompasMesh.smooth_mesh_centroid" />
+      <Description value="Smooth a compas mesh using the &quot;smooth_mesh_centroid&quot; algorithm." />
+      <Inputs>
+        <Input value="CompasMesh" />
+      </Inputs>
+      <Outputs>
+        <Output value="CompasMesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="0164db94-63f6-43e6-a4d1-019c1f0a7e3c" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="Mesh.ByCompasMesh" x="452" y="115.5" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="b17ac3cb-cbcc-4282-b34a-eda1d9151d7e" />
+      <Name value="Mesh.ByCompasMesh" />
+      <Description value="Make a dynamo mesh from a compas mesh" />
+      <Inputs>
+        <Input value="CompasMesh" />
+      </Inputs>
+      <Outputs>
+        <Output value="Mesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <CoreNodeModels.Input.Filename guid="325a680c-9e4f-4261-ac4e-2b7a16dfe8df" type="CoreNodeModels.Input.Filename" nickname="File Path" x="33" y="45" isVisible="true" isUpstreamVisible="true" lacing="Disabled" isSelectedInput="True" IsFrozen="false" isPinned="false">
+      <System.String>Z:\compas\core\data\faces.obj</System.String>
+      <HintPath>Z:\compas\core\data\faces.obj</HintPath>
+    </CoreNodeModels.Input.Filename>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="460b0278-a991-4094-b6eb-14946f065977" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.Edges" x="462" y="28" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="be5bbd83-5129-4dc0-b9a3-b061bc253f23" />
+      <Name value="CompasMesh.Edges" />
+      <Description value="Return the edges of the compas mesh as Dynamo lines." />
+      <Inputs>
+        <Input value="CompasMesh" />
+      </Inputs>
+      <Outputs>
+        <Output value="Line" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="d3b4ea07-0b86-44ac-9ca6-3b0206cc8abb" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.VertexPositions" x="520" y="336" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="cf5e380c-4ed7-4f87-a53e-85095fb8705e" />
+      <Name value="CompasMesh.VertexPositions" />
+      <Description value="Return the vertex positions of the compas mesh as a list of Dynamo points." />
+      <Inputs>
+        <Input value="CompasMesh" />
+      </Inputs>
+      <Outputs>
+        <Output value="Point" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
+  </Elements>
+  <Connectors>
+    <Dynamo.Graph.Connectors.ConnectorModel start="31a2f0e4-d09a-4c43-a088-6c21ef336bce" start_index="0" end="ae47e6f3-5b2b-4d2a-b520-29657fe5da9b" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ae47e6f3-5b2b-4d2a-b520-29657fe5da9b" start_index="0" end="0164db94-63f6-43e6-a4d1-019c1f0a7e3c" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ae47e6f3-5b2b-4d2a-b520-29657fe5da9b" start_index="0" end="460b0278-a991-4094-b6eb-14946f065977" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="ae47e6f3-5b2b-4d2a-b520-29657fe5da9b" start_index="0" end="d3b4ea07-0b86-44ac-9ca6-3b0206cc8abb" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="325a680c-9e4f-4261-ac4e-2b7a16dfe8df" start_index="0" end="31a2f0e4-d09a-4c43-a088-6c21ef336bce" end_index="0" portType="0" />
+  </Connectors>
+  <Notes />
+  <Annotations />
+  <Presets />
+  <Cameras>
+    <Camera Name="Background Preview" eyeX="-1.2108302291014" eyeY="10.8112644312876" eyeZ="9.85520905416295" lookX="6.2108302291014" lookY="-10.8112644312876" lookZ="-14.8552090541629" upX="0.141372301322301" upY="0.930417567982026" upZ="-0.338137577931308" />
+  </Cameras>
+</Workspace>
