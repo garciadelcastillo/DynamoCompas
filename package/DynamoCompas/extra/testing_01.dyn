@@ -1,4 +1,4 @@
-<Workspace Version="1.3.0.875" X="-189.165595563586" Y="-76.9741567389744" zoom="0.780337701227943" ScaleFactor="1" Name="Home" Description="" RunType="Automatic" RunPeriod="100" HasRunWithoutCrash="True">
+<Workspace Version="1.3.0.875" X="-60.6929794920486" Y="-39.6870775571664" zoom="0.643484521153497" ScaleFactor="1" Name="Home" Description="" RunType="Automatic" RunPeriod="100" HasRunWithoutCrash="True">
   <NamespaceResolutionMap>
     <ClassMap partialName="Math" resolvedName="DSCore.Math" assemblyName="DSCoreNodes.dll" />
   </NamespaceResolutionMap>
@@ -32,10 +32,23 @@
       <System.Int32>0</System.Int32>
       <Range min="0" max="100" step="1" />
     </CoreNodeModels.Input.IntegerSlider>
+    <Dynamo.Graph.Nodes.CustomNodes.Function guid="99b7d3c7-19cd-4b47-a349-105dbcd3e66c" type="Dynamo.Graph.Nodes.CustomNodes.Function" nickname="CompasMesh.from_obj" x="537.77833602276" y="447.507881687714" isVisible="true" isUpstreamVisible="true" lacing="Shortest" isSelectedInput="False" IsFrozen="false" isPinned="false">
+      <PortInfo index="0" default="False" />
+      <ID value="49d28b20-ccd5-4f9e-bc1c-64fab60644cc" />
+      <Name value="CompasMesh.from_obj" />
+      <Description value="Construct a compas mesh from an OBJ file." />
+      <Inputs>
+        <Input value="FilePath" />
+      </Inputs>
+      <Outputs>
+        <Output value="CompasMesh" />
+      </Outputs>
+    </Dynamo.Graph.Nodes.CustomNodes.Function>
   </Elements>
   <Connectors>
     <Dynamo.Graph.Connectors.ConnectorModel start="0044c8f2-57e8-45ff-b9ad-90bd549044bf" start_index="0" end="2df03e20-a7f4-47db-ac4e-9ca92b8568b5" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="2f326665-138b-4567-a9c3-6bb569eca5f8" start_index="0" end="0044c8f2-57e8-45ff-b9ad-90bd549044bf" end_index="0" portType="0" />
+    <Dynamo.Graph.Connectors.ConnectorModel start="2f326665-138b-4567-a9c3-6bb569eca5f8" start_index="0" end="99b7d3c7-19cd-4b47-a349-105dbcd3e66c" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="2df03e20-a7f4-47db-ac4e-9ca92b8568b5" start_index="0" end="e5d4973a-ebf2-4c5b-958e-b3a19589cf50" end_index="0" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="3c79b063-5b6c-48aa-8e65-5945f004fabd" start_index="0" end="2df03e20-a7f4-47db-ac4e-9ca92b8568b5" end_index="1" portType="0" />
     <Dynamo.Graph.Connectors.ConnectorModel start="ff61c53f-7254-40c0-8e3e-979568961c90" start_index="0" end="2df03e20-a7f4-47db-ac4e-9ca92b8568b5" end_index="2" portType="0" />
